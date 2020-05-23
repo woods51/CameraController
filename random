@@ -1,0 +1,139 @@
+
+
+// IN GameManager.cs      public BattleManager bm;
+// bm.ChangeMenu(BattleMenu.Selection);
+public BattleMenu currentMenu;
+
+[Header("Selection")]
+public GameObject SelectionMenu;
+public GameObject selectionInfo;
+public Text selectionInfoText;
+public Text fight;
+private string fightT;
+public Text bag;
+private string bagT;
+public Text pokemon;
+private string pokemonT;
+public Text run;
+private string runT;
+
+[Header("Moves")]
+public GameObject movesMenu;
+public GameObject moveDetails;
+public Text PP;
+public Text pType;
+public string movO;
+private string moveOT;
+public Text moveT;
+private string moveTT;
+public Text moveTH;
+private string moveTHT;
+public Text movef;
+private string movefT;
+
+[Header("Info")]
+public GameObject InfoMenu;
+public Text InfoText;
+
+[Header("Misc")]
+public int currentSelection;
+
+void Start()
+{
+    fightT = fight.text;
+    bagT = bag.text;
+    pokemonT = pokemon.text;
+    runT = run.text;
+    moveOT = moveO.text;
+    moveTT = moveT.text;
+    moveTHT = moveTH.text;
+    movefT = movef.text;
+}
+void Update()
+{
+    if (Input.GetKeyDown(KeyCode.DownArrow))
+    {
+        if (currentSelection < 4)
+        {
+            currentSelection++;
+        }
+    }
+    if (Input.GetKeyDown(KeyCode.UpArrow))
+    {
+        if (currentSelection > 0)
+        {
+            currentSelection--;
+        }
+    }
+    if (currentSelection == 0)
+        currentSelection = 1;
+    
+    switch (currentMenu)
+    {
+        case BattleMenu.Fight:
+            switch (currentSelection)
+            {
+                case 1:
+                    move0.text = "> " + moveOT;
+                    moveT.text = moveT.text;
+                    moveTH.text = moveTH.text;
+                    movef.text = movef.text;
+                    break;
+                case 2:
+                    move0.text = moveOT;
+                    moveT.text = "> " + moveT.text;
+                    moveTH.text = moveTH.text;
+                    movef.text = movef.text;
+                    break;
+                case 3:
+                    move0.text = moveOT;
+                    moveT.text = moveT.text;
+                    moveTH.text = "> " + moveTH.text;
+                    movef.text = movef.text;
+                    break;
+                case 4:
+                    move0.text = moveOT;
+                    moveT.text = moveT.text;
+                    moveTH.text = moveTH.text;
+                    movef.text = "> " + movef.text;
+                    break;
+            }
+     }
+}
+public void ChangeMenu(BattleMenu m)
+{
+    currentMenu = m;
+    currentSelection = 1;
+    switch(m)
+    {
+        case BattleMenu.Selection:
+            SelectionMenu.gameObject.SetActive(true);
+            selectionInfo.gameObject.SetActive(true);
+            movesMenu.gameObject.SetActive(false);
+            movesDetails.gameObject.SetActive(false);
+            InfoMenu.gameObject.SetActive(false);
+            break;
+        case BattleMenu.Fight:
+            SelectionMenu.gameObject.SetActive(false);
+            selectionInfo.gameObject.SetActive(false);
+            movesMenu.gameObject.SetActive(true);
+            movesDetails.gameObject.SetActive(true);
+            InfoMenu.gameObject.SetActive(false);
+            break;
+        case BattleMenu.Info:
+            SelectionMenu.gameObject.SetActive(false);
+            selectionInfo.gameObject.SetActive(false);
+            movesMenu.gameObject.SetActive(false);
+            movesDetails.gameObject.SetActive(false);
+            InfoMenu.gameObject.SetActive(true);
+            break;
+        
+public enum BattleMenu
+{
+    Selection,
+    Pokemon,
+    Bag,
+    Fight,
+    Info
+}
+                
