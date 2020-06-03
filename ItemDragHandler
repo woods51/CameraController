@@ -1,0 +1,40 @@
+using UnityEngine;
+using UnityEngine.EventSystems;
+
+public class ItemDragHandler : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler {
+    private Transform originalParent;
+    private bool isDragging;
+    
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        if (Inventory.instance.itemList[transform.parent.GetSiblingIndex()] != null)
+        {
+            if (eventData.button == PointerEventData.InputButton.Left)
+            {
+                isDragging = true;
+                originalParent = transform.parent;
+                transform.SetParent(transfrom.parent.parent);
+                GetComponent<CanvasGroup>().blockRaycasts = false;
+            }
+        }
+    }
+    
+    public OnDrag(PointerEventData eventData)
+    {
+        if (Inventory.instance.itemList[originalParent.transform.GetSiblingIndex()] != null && eventData.button == PointerEventData.InputButton.Left)
+        {
+            transform.position = Input.mousePosition;
+        }
+    }
+    
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        if (eventData.button == PointerEventData.InputButton.Left)
+        {
+            isDragging = false;
+            transform.SetParent(originalParent);
+            transform.localPosition = Vector3.zero;
+            GetComponent<CanvasGroup>().blockRaycasts = true;
+        }
+    }
+}
